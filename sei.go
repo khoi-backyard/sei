@@ -26,15 +26,12 @@ func New() *Sei {
 		return c.String(http.StatusNotFound, "404")
 	}
 
-	sei.router = NewRouter()
+	sei.router = NewRouter(&sei)
 	return &sei
 }
 
 func (s *Sei) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	c := s.contextPool.Get().(*Context)
-	defer s.contextPool.Put(c)
-
-	c.Reset(w, r)
+	c := s.getContext(w, r)
 
 	method := r.Method
 	path := r.URL.RawPath
@@ -72,4 +69,14 @@ func (s *Sei) GET(path string, h HandlerFunc) {
 
 func (s *Sei) Use(mws ...MiddlewareFunc) {
 	s.middlewares = append(s.middlewares, mws...)
+}
+
+func (s *Sei) getContext(w http.ResponseWriter, r *http.Request) *Context {
+	c := s.contextPool.Get().(*Context)
+	c.Reset(w, r)
+	return c
+}
+
+func (s *Sei) putContext(c *Context) {
+	s.contextPool.Put(c)
 }

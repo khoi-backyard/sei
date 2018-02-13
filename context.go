@@ -6,15 +6,17 @@ import (
 )
 
 type Context struct {
-	req  *http.Request
-	res  *Response
-	data map[string]interface{}
+	req    *http.Request
+	res    *Response
+	data   map[string]interface{}
+	params map[string]string
 }
 
 func NewContext() *Context {
 	return &Context{
-		data: make(map[string]interface{}),
-		res:  new(Response),
+		res:    new(Response),
+		data:   make(map[string]interface{}),
+		params: make(map[string]string),
 	}
 }
 

@@ -2,10 +2,12 @@ package sei
 
 type Router struct {
 	handlers map[string]HandlerFunc
+	sei      *Sei
 }
 
-func NewRouter() *Router {
+func NewRouter(s *Sei) *Router {
 	return &Router{
+		sei:      s,
 		handlers: make(map[string]HandlerFunc),
 	}
 }
