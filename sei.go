@@ -32,6 +32,7 @@ func New() *Sei {
 
 func (s *Sei) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	c := s.getContext(w, r)
+	defer s.putContext(c)
 
 	method := r.Method
 	path := r.URL.RawPath
