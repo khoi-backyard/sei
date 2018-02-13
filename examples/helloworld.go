@@ -4,12 +4,35 @@ import (
 	"log"
 
 	"github.com/zalora/sei"
+	"fmt"
 )
 
 func main() {
 	s := sei.New()
 
+	s.Use(func(next sei.HandlerFunc) sei.HandlerFunc {
+		return func(c *sei.Context) error {
+			fmt.Println("Middlware 1")
+			return next(c)
+		}
+	})
+
+	s.Use(func(next sei.HandlerFunc) sei.HandlerFunc {
+		return func(c *sei.Context) error {
+			fmt.Println("Middlware 2")
+			return next(c)
+		}
+	})
+
+	s.Use(func(next sei.HandlerFunc) sei.HandlerFunc {
+		return func(c *sei.Context) error {
+			fmt.Println("Middlware 3")
+			return next(c)
+		}
+	})
+
 	s.GET("/", func(ctx *sei.Context) error {
+		fmt.Println("/ handled")
 		return ctx.String(200, "Hola")
 	})
 
