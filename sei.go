@@ -7,10 +7,10 @@ import (
 
 type (
 	Sei struct {
-		middlewares        []MiddlewareFunc
-		router             *Router
-		contextPool        sync.Pool
-		invalidPathHandler HandlerFunc
+		middlewares     []MiddlewareFunc
+		router          *Router
+		contextPool     sync.Pool
+		notFoundHandler HandlerFunc
 	}
 	MiddlewareFunc func(HandlerFunc) HandlerFunc
 	HandlerFunc    func(*Context) error
@@ -22,7 +22,7 @@ func New() *Sei {
 		return NewContext()
 	}
 
-	sei.invalidPathHandler = func(c *Context) error {
+	sei.notFoundHandler = func(c *Context) error {
 		return c.String(http.StatusNotFound, "404")
 	}
 
@@ -45,7 +45,7 @@ func (s *Sei) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h := s.router.Find(method, path)
 
 	if h == nil {
-		h = s.invalidPathHandler
+		h = s.notFoundHandler
 	}
 
 	for i := len(s.middlewares) - 1; i >= 0; i-- {
