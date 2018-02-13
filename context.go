@@ -27,6 +27,7 @@ func (c *Context) Response() *Response {
 }
 
 func (c *Context) String(statusCode int, s string) error {
+	c.res.Writer.Header().Set("Content-Type", "text/plain")
 	c.res.Writer.WriteHeader(statusCode)
 	c.res.Writer.Write([]byte(s))
 	return nil

@@ -1,10 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/zalora/sei"
-	"fmt"
 )
 
 func main() {
