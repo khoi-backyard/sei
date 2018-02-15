@@ -58,7 +58,7 @@ func (t *Trie) find(node *Node, key string) (*Node, bool) {
 
 	for _, r := range runes {
 		n, ok := node.children[r]
-		if ok || !n.isLeaf {
+		if ok {
 			node = n
 		} else {
 			return nil, false

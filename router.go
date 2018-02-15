@@ -3,28 +3,39 @@ package sei
 import (
 	"net/http"
 
-	"github.com/armon/go-radix"
+	"github.com/zalora/sei/trie"
 )
 
 type Router struct {
-	tree *radix.Tree
+	tree *trie.Trie
 	sei  *Sei
 }
 
 func NewRouter(s *Sei) *Router {
 	return &Router{
 		sei:  s,
-		tree: radix.New(),
+		tree: trie.New(),
 	}
 }
 
 func (r *Router) Add(method, path string, h HandlerFunc) {
-	r.tree.Insert(path, h)
+	r.tree.Add(path, h)
 }
 
 func (r *Router) Find(method, path string) HandlerFunc {
-	_, h, _ := r.tree.LongestPrefix(path)
-	return h.(HandlerFunc)
+	n, ok := r.tree.Find(path)
+
+	if !ok {
+		return nil
+	}
+
+	h, ok := n.Data().(HandlerFunc)
+
+	if !ok {
+		return nil
+	}
+
+	return h
 }
 
 func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
