@@ -11,7 +11,11 @@ func (n *Node) Data() interface{} {
 	return n.data
 }
 
-func newNode(val rune, isLeaf bool) *Node {
+func (n *Node) IsLeaf() bool {
+	return n.isLeaf
+}
+
+func NewNode(val rune, isLeaf bool) *Node {
 	return &Node{
 		value:    val,
 		children: make(map[rune]*Node),
@@ -25,7 +29,7 @@ type Trie struct {
 
 func New() *Trie {
 	return &Trie{
-		root: newNode(0, false),
+		root: NewNode(0, false),
 	}
 }
 
@@ -35,7 +39,7 @@ func (t *Trie) Add(key string, data interface{}) *Node {
 
 	for _, r := range runes {
 		if _, ok := node.children[r]; !ok {
-			node.children[r] = newNode(r, false)
+			node.children[r] = NewNode(r, false)
 		}
 		node = node.children[r]
 	}
