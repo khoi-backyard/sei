@@ -2,19 +2,17 @@ package sei
 
 import (
 	"net/http"
-
-	"github.com/zalora/sei/trie"
 )
 
 type Router struct {
-	tree *trie.Trie
+	tree *Trie
 	sei  *Sei
 }
 
 func NewRouter(s *Sei) *Router {
 	return &Router{
 		sei:  s,
-		tree: trie.New(),
+		tree: NewTrie(),
 	}
 }
 

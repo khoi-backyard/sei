@@ -1,4 +1,4 @@
-package trie
+package sei
 
 type Node struct {
 	value    rune
@@ -27,7 +27,7 @@ type Trie struct {
 	root *Node
 }
 
-func New() *Trie {
+func NewTrie() *Trie {
 	return &Trie{
 		root: NewNode(0, false),
 	}

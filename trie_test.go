@@ -1,4 +1,4 @@
-package trie
+package sei
 
 import (
 	"testing"
@@ -20,7 +20,7 @@ var invalidRoutes = []struct {
 }
 
 func TestTrie_Add(t *testing.T) {
-	trie := New()
+	trie := NewTrie()
 
 	data := "some associated data"
 	n := trie.Add("/api/v1", data)
@@ -31,7 +31,7 @@ func TestTrie_Add(t *testing.T) {
 }
 
 func TestTrie_Find(t *testing.T) {
-	trie := New()
+	trie := NewTrie()
 
 	for _, c := range validRoutes {
 		trie.Add(c.route, c.route)
