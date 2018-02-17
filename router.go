@@ -16,24 +16,12 @@ func NewRouter(s *Sei) *Router {
 	}
 }
 
-func (r *Router) Add(method, path string, h HandlerFunc) {
-	r.tree.Add(path, h)
+func (r *Router) Add(h HandlerFunc, path string, methods ...string) {
+	r.tree.Add(h, path, methods...)
 }
 
 func (r *Router) Find(method, path string) HandlerFunc {
-	n, ok := r.tree.Find(path)
-
-	if !ok {
-		return nil
-	}
-
-	h, ok := n.Data().(HandlerFunc)
-
-	if !ok {
-		return nil
-	}
-
-	return h
+	return r.tree.Find(path, method)
 }
 
 func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {

@@ -65,7 +65,7 @@ func (s *Sei) Start(addr string) error {
 }
 
 func (s *Sei) GET(path string, h HandlerFunc) {
-	s.router.Add(http.MethodGet, path, h)
+	s.router.Add(h, path, http.MethodGet)
 }
 
 func (s *Sei) Use(mws ...MiddlewareFunc) {
