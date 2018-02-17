@@ -68,6 +68,38 @@ func (s *Sei) GET(path string, h HandlerFunc) {
 	s.router.Add(h, path, http.MethodGet)
 }
 
+func (s *Sei) HEAD(path string, h HandlerFunc) {
+	s.router.Add(h, path, http.MethodHead)
+}
+
+func (s *Sei) POST(path string, h HandlerFunc) {
+	s.router.Add(h, path, http.MethodPost)
+}
+
+func (s *Sei) PUT(path string, h HandlerFunc) {
+	s.router.Add(h, path, http.MethodPut)
+}
+
+func (s *Sei) PATCH(path string, h HandlerFunc) {
+	s.router.Add(h, path, http.MethodPatch)
+}
+
+func (s *Sei) DELETE(path string, h HandlerFunc) {
+	s.router.Add(h, path, http.MethodDelete)
+}
+
+func (s *Sei) CONNECT(path string, h HandlerFunc) {
+	s.router.Add(h, path, http.MethodConnect)
+}
+
+func (s *Sei) OPTIONS(path string, h HandlerFunc) {
+	s.router.Add(h, path, http.MethodOptions)
+}
+
+func (s *Sei) TRACE(path string, h HandlerFunc) {
+	s.router.Add(h, path, http.MethodTrace)
+}
+
 func (s *Sei) Use(mws ...MiddlewareFunc) {
 	s.middlewares = append(s.middlewares, mws...)
 }
