@@ -36,8 +36,12 @@ func main() {
 		return ctx.String(200, "Hola")
 	})
 
-	s.GET("/json", func(ctx *sei.Context) error {
-		return ctx.JSON(200, map[string]interface{}{"ASD": "BDC"})
+	s.GET("/any", func(ctx *sei.Context) error {
+		return ctx.JSON(200, map[string]interface{}{"method": "GET"})
+	})
+
+	s.POST("/any", func(ctx *sei.Context) error {
+		return ctx.JSON(200, map[string]interface{}{"method": "POST"})
 	})
 
 	log.Fatal(s.Start(":8080"))
